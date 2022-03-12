@@ -8,6 +8,7 @@ class AOSAppPositiveTestCases(unittest.TestCase):
     def test_create_new_user():
 
         methods.set_up()
+        methods.validate_homepage()
         methods.create_new_account()
         methods.sign_out()
         methods.log_in()

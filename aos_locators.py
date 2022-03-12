@@ -17,6 +17,13 @@ city = fake.city()
 address = fake.street_address().replace("\n", " ")[:50]
 state = fake.province()[:10]
 postalcode = fake.postalcode()
+categoryListboxContactUs = ['Laptops', 'Headphones', 'Tablets', 'Speakers', 'Mice']
+I = len(categoryListboxContactUs)
+productListboxContactUs = ['HP Chromebook 14 G1(ENERGY STAR', 'HP Chromebook 14 G1(ES)', 'HP ENVY - 17t Touch Laptop',
+                           'HP ENVY X360 - 15t Laptop', 'HP Pavilion 15t Touch Laptop', 'HP Pavilion 15z Laptop', 'HP Pavilion 15z Touch Laptop'
+                           'HP Pavilion x360 -11t Touch Laptop', 'HP Spectre x360 -13-4102dx', 'HP Stream - 11 -do20nr Laptop', 'HP ZBook 17 G2 Mobile Workstation']
+J = len(productListboxContactUs)
+description = f'User added by {username} via Python Selenium Automated Script'
 
 print(f'{username}')
 print(f'{password}')
