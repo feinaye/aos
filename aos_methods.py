@@ -266,9 +266,8 @@ def create_new_account():
         print(f'The registered username is: {locators.username}; the password is: {locators.password}')
         sleep(2)
 
-    else:
-        print('Something went wrong with create a new account. Please check your codes and try again.')
-        sleep(2)
+        driver.find_element(By.ID, 'menuUserLink').is_displayed()
+        print('Creating new account is successful, validated by username appears on the homepage.')
 
 
 def sign_out():
@@ -276,17 +275,17 @@ def sign_out():
     if driver.current_url == locators.aos_homepage_url:
         sleep(2)
 
-        assert driver.find_element(By.LINK_TEXT, locators.username).is_displayed()
+        assert driver.find_element(By.ID, 'menuUser').is_displayed()
         sleep(0.5)
 
-        driver.find_element(By.LINK_TEXT, locators.username).click()
+        driver.find_element(By.ID, 'menuUser').click()
         sleep(0.5)
 
-        driver.find_element(By.XPATH, '//*[@id="loginMiniTitle"]/label[contains(.,"Sign out")]').click()
-        sleep(0.5)
+        driver.find_element(By.XPATH, '//*[@id="loginMiniTitle"]/label[3][contains(.,"Sign out")]').click()
+        sleep(2)
 
         print('Ordering products has been finished. Now we Logged out our account.')
-        sleep(2)
+        sleep(1)
 
     else:
         print("Something is wrong with sign out. Please check your codes and try again.")
@@ -307,7 +306,7 @@ def log_in():
         driver.find_element(By.NAME, 'password').send_keys(locators.password)
         sleep(0.5)
 
-        driver.find_element(By.ID, 'sign_in_btnundefined').click()
+        driver.find_element(By.XPATH, '//button[contains(., "SIGN IN")]').click()
         sleep(0.5)
 
         driver.find_element(By.ID, 'menuUserLink').is_displayed()
@@ -323,13 +322,13 @@ def log_in():
 
 def checkout_shopping_cart():
 
-    driver.find_element(By.XPATH, '//span[contains(., " EXPLORE THE NEW DESIGN ")]').is_selected()
+    driver.find_element(By.XPATH, '//span[contains(., "EXPLORE THE NEW DESIGN")]').is_selected()
     sleep(1)
 
-    driver.find_element(By.ID, 'see_offer_btn').click()
+    driver.find_element(By.XPATH, '//button[contains(., "see_offer_btn)"]').click()
     sleep(2)
 
-    if driver.current_url == locators.AOS_select_product_url:
+    if driver.current_url == locators.aos_select_product_url:
         sleep(1)
         print('We are on the right place for shopping.')
         sleep(0.25)
@@ -349,13 +348,13 @@ def checkout_shopping_cart():
         driver.find_element(By.ID, 'checkOutPopUp').click()
         sleep(2)
 
-        if driver.current_url == locators.AOS_order_payment_url:
+        if driver.current_url == locators.aos_order_payment_url:
             sleep(1)
 
             driver.find_element(By.XPATH, '//label[contains(., "1. SHIPPING DETAILS ")]').is_displayed()
             sleep(0.25)
 
-            driver.find_element(By.XPATH, '//label[contains(., "locators.full_name")]').is_displayed()
+            driver.find_element(By.XPATH, '//label[contains(., "full_name")]').is_displayed()
             sleep(2)
 
             print('We are on Order Payment page.')
@@ -397,7 +396,7 @@ def checkout_shopping_cart():
             driver.find_element(By.XPATH, '//label[contains(., "locators.phone")]').is_displayed()
             sleep(0.25)
 
-            driver.find_element(By.XPATH, '//a[contains(., "locators.AOS_order_date")]').is_displayed()
+            driver.find_element(By.XPATH, '//a[contains(., "locators.aos_order_date")]').is_displayed()
             sleep(0.25)
 
             driver.find_element(By.XPATH, '//span[contains(., "locators.username")]').click()
@@ -415,23 +414,19 @@ def checkout_shopping_cart():
             driver.find_element(By.LINK_TEXT, 'Sign out').click()
             sleep(0.5)
 
-            print('YOur ordering and checking out is successful!')
+            print('Your ordering and checking out is successful!')
             sleep(0.25)
 
         else:
             print('Your payment is not successful. Please check and pay again.')
             sleep(1)
 
-    else:
-        print('You are not on the right place for your item. Please check and try again.')
-        sleep(1)
-
 
 def delete_account():
     if driver.current_url == locators.aos_homepage_url:
         sleep(2)
 
-        driver.find_element(By.XPATH, '//span[contains(., "locators_username")]').is_displayed()
+        driver.find_element(By.XPATH, '//span[contains(., "username")]').is_displayed()
         sleep(0.25)
 
         driver.find_element(By.XPATH, '//span[contains(., "locators_username")]').click()
@@ -495,11 +490,11 @@ def tear_down():
         driver.quit()
 
 
-# set_up()
-# validate_homepage()
-# create_new_account()
-# sign_out()
-# log_in()
+set_up()
+validate_homepage()
+create_new_account()
+sign_out()
+log_in()
 # delete_account()
 # checkout_shopping_cart()
-# tear_down()
+tear_down()
