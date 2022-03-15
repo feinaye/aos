@@ -6,7 +6,7 @@ app = 'AOS'
 aos_homepage_url = 'https://advantageonlineshopping.com/#/'
 aos_homepage_title = '\xa0Advantage Shopping'
 
-first_name = fake.first_name()
+first_name = '236'+fake.first_name()
 last_name = fake.last_name()
 full_name = f'{first_name} {last_name}'
 username = f'{first_name}'[:15]
@@ -23,17 +23,20 @@ I = len(categoryListboxContactUs)
 productListboxContactUs = ['HP Chromebook 14 G1(ENERGY STAR', 'HP Chromebook 14 G1(ES)', 'HP ENVY - 17t Touch Laptop',
                            'HP ENVY X360 - 15t Laptop', 'HP Pavilion 15t Touch Laptop', 'HP Pavilion 15z Laptop', 'HP Pavilion 15z Touch Laptop'
                            'HP Pavilion x360 -11t Touch Laptop', 'HP Spectre x360 -13-4102dx', 'HP Stream - 11 -do20nr Laptop', 'HP ZBook 17 G2 Mobile Workstation']
-value = random.choice(productListboxContactUs)
 description = f'User added by {username} via Python Selenium Automated Script'
 aos_select_product_url = 'https://advantageonlineshopping.com/#/product/3'
 aos_order_payment_url = 'https://advantageonlineshopping.com/#/orderPayment'
-safepay_username = f'{first_name}+fake.number()'[:12]
-safepay_password = f'{first_name}{password}'[:10]
-aos_order_quantity = [1, 2, 3]
+safepay_username = f'{first_name}fake.number()'[:12]
+safepay_password = 'SPay_1236'
+
+color = ['BLUE', 'BLACK', 'GREY', 'DARK BLUE', 'RED', 'YELLOW']
+quantity = [1, 2, 3]
 aos_order_date = fake.date()
 
 print(f'{username}')
+print(f'{full_name}')
 print(f'{password}')
 print(f'{aos_order_date}')
+print(f'{safepay_password}')
 
 

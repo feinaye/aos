@@ -136,10 +136,10 @@ def validate_homepage():
         sleep(1)
 
         driver.find_element(By.ID, 'send_btnundefined').click()
-        sleep(1)
+        sleep(0.5)
 
         driver.find_element(By.XPATH, '//p[contains(., "Thank you for contacting Advantage support.")]').is_displayed()
-        sleep(1)
+        sleep(0.5)
 
 
         print('CONTACT US form works properly. "Thank you for contacting Advantage support" confirmation is displayed.')
@@ -322,21 +322,15 @@ def log_in():
 
 def checkout_shopping_cart():
 
-    driver.find_element(By.XPATH, '//span[contains(., "EXPLORE THE NEW DESIGN")]').is_selected()
+    driver.find_element(By.XPATH, '//*[@id="div-special-offer"]/div/span[contains(., " EXPLORE THE NEW DESIGN ")]').is_displayed()
     sleep(1)
 
-    driver.find_element(By.XPATH, '//button[contains(., "see_offer_btn)"]').click()
+    driver.find_element(By.ID, 'see_offer_btn').click()
     sleep(2)
 
     if driver.current_url == locators.aos_select_product_url:
         sleep(1)
-        print('We are on the right place for shopping.')
-        sleep(0.25)
-
-        driver.find_element(By.XPATH, '//span[contains(., "YELLOW")]')
-        sleep(0.25)
-
-        driver.find_element(By.XPATH, '//label[contains(., "Quantity:")]').send_keys(locators.AOS_order_quantity[0])
+        print('You are on the right place for shopping.')
         sleep(0.25)
 
         driver.find_element(By.NAME, 'save_to_cart').click()
@@ -352,109 +346,77 @@ def checkout_shopping_cart():
             sleep(1)
 
             driver.find_element(By.XPATH, '//label[contains(., "1. SHIPPING DETAILS ")]').is_displayed()
-            sleep(0.25)
-
-            driver.find_element(By.XPATH, '//label[contains(., "full_name")]').is_displayed()
-            sleep(2)
-
-            print('We are on Order Payment page.')
-            sleep(0.25)
-
-            driver.find_element(By.XPATH, '//h5[contains(., " ORDER SUMMARY")]').is_displayed()
-            sleep(1)
-
-            driver.find_element(By.ID, 'next_btn').click()
-            sleep(2)
-
-            driver.find_element(By.NAME, 'safepay').is_selected()
-            sleep(1)
-
-            driver.find_element(By.NAME, 'safepay_username').send_keys(locators.safepay_username)
-            sleep(1)
-
-            driver.find_element(By.NAME, 'safepay_password').send_keys(locators.safepay_password)
-            sleep(1)
-
-            driver.find_element(By.ID, 'pay_now_btn_SAFEPAY').click()
-            sleep(2)
-
-            assert(driver.find_element(By.XPATH, '//span[contains(., "Thank_you_for_buying_with_Advantage")]')).is_displayed()
-            sleep(1)
-
-            driver.find_element(By.XPATH, '//label[contains(., "locators.AOS_order_number")]').is_displayed()
-            sleep(0.25)
-
-            driver.find_element(By.XPATH, '//label[contains(., "locators.AOS_tracking_number")]').is_displayed()
-            sleep(0.25)
-
-            driver.find_element(By.XPATH, '//label[contains(., "locators.full_name")]').is_displayed()
-            sleep(0.25)
-
-            driver.find_element(By.XPATH, '//label[contains(., "locators.address")]').is_displayed()
-            sleep(0.25)
-
-            driver.find_element(By.XPATH, '//label[contains(., "locators.phone")]').is_displayed()
-            sleep(0.25)
-
-            driver.find_element(By.XPATH, '//a[contains(., "locators.aos_order_date")]').is_displayed()
-            sleep(0.25)
-
-            driver.find_element(By.XPATH, '//span[contains(., "locators.username")]').click()
-            sleep(1)
-
-            driver.find_element(By.LINK_TEXT, 'My orders').click()
-            sleep(2)
-
-            driver.find_element(By.XPATH, '//label[contains(., "locators.AOS_order_number")]').is_displayed()
-            sleep(0.25)
-
-            driver.find_element(By.XPATH, '//span[contains(., "locators.username")]').click()
-            sleep(1)
-
-            driver.find_element(By.LINK_TEXT, 'Sign out').click()
             sleep(0.5)
 
-            print('Your ordering and checking out is successful!')
-            sleep(0.25)
+            if driver.find_element(By.XPATH, f'//div[contains(., "{locators.full_name}")]').is_displayed():
+                print(f'------{locators.full_name} is found! ------')
 
-        else:
-            print('Your payment is not successful. Please check and pay again.')
-            sleep(1)
+            if driver.find_element(By.XPATH, f'//h5[contains(., "ORDER SUMMARY")]').is_displayed():
+                print('Order Summary is displayed.')
+                sleep(1)
+
+                driver.find_element(By.ID, 'next_btn').click()
+                sleep(1)
+
+                driver.find_element(By.NAME, 'safepay').is_selected()
+                sleep(1)
+
+                driver.find_element(By.NAME, 'safepay_username').send_keys(locators.safepay_username)
+                sleep(1)
+
+                driver.find_element(By.NAME, 'safepay_password').send_keys(locators.safepay_password)
+                sleep(1)
+
+                driver.find_element(By.ID, 'pay_now_btn_SAFEPAY').click()
+                sleep(2)
+
+                assert driver.find_element(By.ID, 'orderPaymentSuccess')
+
+                orders = driver.find_element(By.ID, 'orderPaymentSuccess').text
+                print(orders)
+
+                if driver.find_element(By.XPATH, f'//span[contains(., "{locators.username}")]').is_displayed():
+                    sleep(1)
+
+                driver.find_element(By.ID, 'menuUser').click()
+
+                driver.find_element(By.XPATH, '//*[@id="loginMiniTitle"]/label[3][contains(.,"Sign out")]').click()
+                sleep(2)
+
+                print('Your ordering and checking out is successful!')
+                sleep(0.25)
+
+            else:
+                print('Your payment is not successful. Please check and pay again.')
+                sleep(1)
 
 
 def delete_account():
     if driver.current_url == locators.aos_homepage_url:
         sleep(2)
 
-        driver.find_element(By.XPATH, '//span[contains(., "username")]').is_displayed()
-        sleep(0.25)
-
-        driver.find_element(By.XPATH, '//span[contains(., "locators_username")]').click()
+        driver.find_element(By.ID, 'menuUserLink').click()
         sleep(1)
 
-        driver.find_element(By.LINK_TEXT, 'My orders').is_selected()
+        driver.find_element(By.XPATH, '/html/body[contains(., "My orders")]').click()
         sleep(1)
 
-        driver.find_element(By.LINK_TEXT, 'My orders').click()
+        check_order = driver.find_element(By.CLASS_NAME, 'roboto-bold ng-binding').text
+        print({check_order})
+        # sleep(1)
+
+        driver.find_element(By.ID, 'menuUserLink').click()
         sleep(1)
 
-        driver.find_element(By.XPATH, '//label[contains(., " - No orders - ")]').is_displayed()
-        sleep(1)
+        # driver.find_element(By.XPATH, '/html/body[contains(., "My account"]').click()
+        driver.find_element(By.XPATH, '//*[@id="loginMiniTitle"]/label[1][contains(., "My account")]').click()
+        sleep(0.5)
 
-        driver.find_element(By.XPATH, '//span[contains(., "locators_username")]').click()
-        sleep(1)
+        # driver.find_element(By.XPATH, '//*[@id="userDetails"]/div[1]/label[contains(., "full_name")]').is_displayed()
+        # sleep(1)
 
-        driver.find_element(By.LINK_TEXT, 'My account').click()
+        driver.find_element(By.CLASS_NAME, 'deleteBtnText').click()
         sleep(1)
-
-        driver.find_element(By.XPATH, '//label[contains(., "locators.full_name")]').is_displayed()
-        sleep(1)
-
-        driver.find_element(By.XPATH, '//div[contains(., "Delete Account")]').click()
-        sleep(1)
-
-        driver.find_element(By.ID, 'menuUser').click()
-        sleep(2)
 
         driver.find_element(By.ID, 'menuUser').click()
         sleep(2)
@@ -490,11 +452,11 @@ def tear_down():
         driver.quit()
 
 
-set_up()
-validate_homepage()
-create_new_account()
-sign_out()
-log_in()
-# delete_account()
+# set_up()
+# validate_homepage()
+# create_new_account()
+# sign_out()
+# log_in()
 # checkout_shopping_cart()
-tear_down()
+# # delete_account()
+# tear_down()
