@@ -47,112 +47,80 @@ def set_up():
 
 
 def validate_homepage():
-    if driver.current_url == locators.aos_homepage_url and driver.title == locators.aos_homepage_title:
-        sleep(2)
+# 1. Check that SPEAKERS, TABLETS, HEADPHONES, LAPTOPS, MICE texts are displayed.
+    assert driver.find_element(By.ID, 'speakersTxt').is_displayed()
+    print('SPEAKERS text is displayed.')
+    sleep(0.25)
 
-        # 1. Check that SPEAKERS, TABLETS, HEADPHONES, LAPTOPS, MICE texts are displayed.
-        driver.find_element(By.ID, 'speakersTxt').is_displayed()
-        sleep(0.25)
+    assert driver.find_element(By.ID, 'tabletsTxt').is_displayed()
+    print('TABLETS text is displayed.')
+    sleep(0.25)
 
-        driver.find_element(By.ID, 'tabletsTxt').is_displayed()
-        sleep(0.25)
+    assert driver.find_element(By.ID, 'laptopsTxt').is_displayed()
+    print('LAPTOPS text is displayed')
+    sleep(0.25)
 
-        driver.find_element(By.ID, 'laptopsTxt').is_displayed()
-        sleep(0.25)
+    assert driver.find_element(By.ID, 'miceTxt').is_displayed()
+    print('MICE text is displayed.')
+    sleep(0.25)
 
-        driver.find_element(By.ID, 'miceTxt').is_displayed()
-        sleep(0.25)
+    assert driver.find_element(By.ID, 'headphonesTxt').is_displayed()
+    print('HEADPHONES text is displayed.')
+    sleep(0.25)
 
-        driver.find_element(By.ID, 'headphonesTxt').is_displayed()
-        sleep(0.25)
+    print('The texts of SPEAKERS, TABLETS, HEADPHONES, LAPTOPS, MICE are all displayed.')
+    sleep(1)
 
-        print('The texts of SPEAKERS, TABLETS, HEADPHONES, LAPTOPS, MICE are displayed.')
-        sleep(1)
+# 2. Click if the links of SPECIAL OFFER, POPULAR ITEMS and CONTACT US at the top nav menu are clickable.
+    driver.find_element(By.LINK_TEXT, 'OUR PRODUCTS').click()
+    sleep(0.25)
 
-    else:
-        print('Something is wrong with homepage texts. Please check your codes and try again.')
-        sleep(1)
+    driver.find_element(By.LINK_TEXT, 'SPECIAL OFFER').click()
+    sleep(0.25)
 
-    # 2. Click if the links of SPECIAL OFFER, POPULAR ITEMS and CONTACT US at the top nav menu are clickable.
-    if driver.current_url == locators.aos_homepage_url:
-        sleep(1)
+    driver.find_element(By.LINK_TEXT, 'POPULAR ITEMS').click()
+    sleep(0.25)
 
-        driver.find_element(By.LINK_TEXT, 'OUR PRODUCTS').click()
-        sleep(0.25)
+    print('The links for SPECIAL OFFER, POPULAR ITEMS and CONTACT US at the top nav menu are all clickable.')
+    sleep(1)
 
-        driver.find_element(By.LINK_TEXT, 'SPECIAL OFFER').click()
-        sleep(0.25)
+# 3. Check if the main logo is displayed.
+    driver.find_element(By.XPATH, '/html/body/header/nav/div/a/span[1][contains(., "dvantage")]').is_displayed()
+    sleep(0.25)
 
-        driver.find_element(By.LINK_TEXT, 'POPULAR ITEMS').click()
-        sleep(0.25)
+    driver.find_element(By.XPATH, '/html/body/header/nav/div/a/span[2][contains(.,"DEMO")]').is_displayed()
+    sleep(0.25)
 
-        print('The links for SPECIAL OFFER, POPULAR ITEMS and CONTACT US at the top nav menu are clickable.')
-        sleep(1)
+    print('The main logo of Advantage Online Shopping application is displayed.')
+    sleep(1)
 
-    else:
-        print('Something is wrong with top navigation menu links. Please check your codes and try again.')
-        sleep(1)
+# 4. Check if the CONTACT US form works properly.
+    sleep(1)
+    Select(driver.find_element(By.NAME, 'categoryListboxContactUs')).select_by_visible_text('Laptops')
+    sleep(1)
 
-    # 3. Check if the main logo is displayed.
-    if driver.current_url == locators.aos_homepage_url:
-        sleep(2)
+    Select(driver.find_element(By.NAME, 'productListboxContactUs')).select_by_index(2)
+    sleep(1)
 
-        driver.find_element(By.XPATH, '/html/body/header/nav/div/a/span[1][contains(., "dvantage")]').is_displayed()
-        sleep(0.25)
+    driver.find_element(By.NAME, 'emailContactUs').send_keys(locators.email)
+    sleep(1)
 
-        driver.find_element(By.XPATH, '/html/body/header/nav/div/a/span[2][contains(.,"DEMO")]').is_displayed()
-        sleep(0.25)
+    driver.find_element(By.NAME, 'subjectTextareaContactUs').send_keys(locators.description)
+    sleep(2)
 
-        print('The main logo of Advantage Online Shopping application is displayed.')
-        sleep(1)
+    driver.find_element(By.ID, 'send_btnundefined').is_enabled()
+    sleep(1)
 
-    else:
-        print('Something is wrong with the display of main logo. Please check your codes and try again.')
-        sleep(1)
+    driver.find_element(By.ID, 'send_btnundefined').click()
+    sleep(0.5)
 
-    # 4. Check if the CONTACT US form works properly.
-    if driver.current_url == locators.aos_homepage_url:
-        sleep(2)
+    assert driver.find_element(By.XPATH, '//p[contains(., "Thank you for contacting Advantage support.")]')
+    sleep(0.25)
 
-        driver.find_element(By.XPATH, '//*[@id="supportCover"][contains(., "CONTACT US")]').is_displayed()
-        sleep(1)
+    print('CONTACT US form works properly. "Thank you for contacting Advantage support" confirmation is displayed.')
+    sleep(1)
 
-        driver.find_element(By.NAME, 'chat_with_us').is_displayed()
-        sleep(1)
-
-        driver.find_element(By.NAME, 'categoryListboxContactUs').click()
-        sleep(1)
-
-        driver.find_element(By.NAME, 'productListboxContactUs').click()
-        sleep(1)
-
-        driver.find_element(By.NAME, 'emailContactUs').send_keys(locators.email)
-        sleep(1)
-
-        driver.find_element(By.NAME, 'subjectTextareaContactUs').send_keys(locators.description)
-        sleep(2)
-
-        driver.find_element(By.ID, 'send_btnundefined').is_enabled()
-        sleep(1)
-
-        driver.find_element(By.ID, 'send_btnundefined').click()
-        sleep(0.5)
-
-        driver.find_element(By.XPATH, '//p[contains(., "Thank you for contacting Advantage support.")]').is_displayed()
-        sleep(0.5)
-
-
-        print('CONTACT US form works properly. "Thank you for contacting Advantage support" confirmation is displayed.')
-        sleep(1)
-
-    else:
-        print('CONTACT US is not successful. Please check your information and try again.')
-        sleep(0.25)
-
-    if driver.find_element(By.LINK_TEXT, 'CONTINUE SHOPPING').is_displayed():
-        sleep(1)
-
-        driver.find_element(By.LINK_TEXT, 'CONTINUE SHOPPING').is_enabled()
+    if driver.find_element(By.LINK_TEXT, 'CONTINUE SHOPPING').is_enabled():
         sleep(1)
 
         print('CONTINUE SHOPPING is displayed and clickable.')
@@ -162,27 +130,18 @@ def validate_homepage():
         print('CONTINUE SHOPPING is not displayed and not clickable.')
         sleep(1)
 
-    # 5. Check out if FOLLOW US section works properly.
+# 5. Check out if FOLLOW US section works properly.
     if driver.current_url == locators.aos_homepage_url:
         sleep(2)
 
         driver.find_element(By.XPATH, '/html/body/div[3]/footer/div/h3[contains(., "FOLLOW US")]')
         sleep(1)
 
-        driver.find_element(By.NAME, 'follow_facebook').is_displayed()
-        sleep(1)
-
         driver.find_element(By.NAME, 'follow_facebook').is_enabled()
-        sleep(1)
-
-        driver.find_element(By.NAME, 'follow_twitter').is_displayed()
         sleep(1)
 
         driver.find_element(By.NAME, 'follow_twitter').is_enabled()
         sleep(1)
-
-        driver.find_element(By.NAME, 'follow_linkedin').is_displayed()
-        sleep(0.25)
 
         driver.find_element(By.NAME, 'follow_linkedin').is_enabled()
         sleep(1)
@@ -231,7 +190,8 @@ def create_new_account():
         driver.find_element(By.NAME, 'phone_numberRegisterPage').send_keys(locators.phone)
         sleep(0.25)
 
-        driver.find_element(By.NAME, 'countryListboxRegisterPage').send_keys('Canada')
+        Select(driver.find_element(By.NAME, 'countryListboxRegisterPage')).\
+            select_by_visible_text('Canada')
         sleep(0.25)
 
         driver.find_element(By.NAME, 'cityRegisterPage').send_keys(locators.city)
@@ -276,20 +236,20 @@ def sign_out():
         sleep(2)
 
         assert driver.find_element(By.ID, 'menuUser').is_displayed()
-        sleep(0.5)
+        sleep(0.25)
 
         driver.find_element(By.ID, 'menuUser').click()
-        sleep(0.5)
+        sleep(0.25)
 
         driver.find_element(By.XPATH, '//*[@id="loginMiniTitle"]/label[3][contains(.,"Sign out")]').click()
-        sleep(2)
+        sleep(0.25)
 
         print('Ordering products has been finished. Now we Logged out our account.')
-        sleep(1)
+        sleep(0.25)
 
     else:
         print("Something is wrong with sign out. Please check your codes and try again.")
-        sleep(2)
+        sleep(0.25)
 
 
 def log_in():
@@ -321,10 +281,6 @@ def log_in():
 
 
 def checkout_shopping_cart():
-
-    driver.find_element(By.XPATH, '//*[@id="div-special-offer"]/div/span[contains(., " EXPLORE THE NEW DESIGN ")]').is_displayed()
-    sleep(1)
-
     driver.find_element(By.ID, 'see_offer_btn').click()
     sleep(2)
 
@@ -336,16 +292,13 @@ def checkout_shopping_cart():
         driver.find_element(By.NAME, 'save_to_cart').click()
         sleep(1)
 
-        driver.find_element(By.ID, 'menuCart').is_displayed()
-        sleep(0.25)
-
         driver.find_element(By.ID, 'checkOutPopUp').click()
         sleep(2)
 
         if driver.current_url == locators.aos_order_payment_url:
             sleep(1)
 
-            driver.find_element(By.XPATH, '//label[contains(., "1. SHIPPING DETAILS ")]').is_displayed()
+            assert driver.find_element(By.XPATH, '//label[contains(., "1. SHIPPING DETAILS ")]').is_displayed()
             sleep(0.5)
 
             if driver.find_element(By.XPATH, f'//div[contains(., "{locators.full_name}")]').is_displayed():
@@ -377,6 +330,8 @@ def checkout_shopping_cart():
 
                 if driver.find_element(By.XPATH, f'//span[contains(., "{locators.username}")]').is_displayed():
                     sleep(1)
+                    print('')
+
 
                 driver.find_element(By.ID, 'menuUser').click()
 
@@ -392,49 +347,49 @@ def checkout_shopping_cart():
 
 
 def delete_account():
-    if driver.current_url == locators.aos_homepage_url:
-        sleep(2)
+    driver.find_element(By.XPATH, f'//a/span[contains(., "{locators.username}")]').click()
+    sleep(1)
 
-        driver.find_element(By.ID, 'menuUserLink').click()
-        sleep(1)
+    driver.find_element(By.XPATH, '/html/body[contains(., "My orders")]').click()
+    sleep(0.25)
 
-        driver.find_element(By.XPATH, '/html/body[contains(., "My orders")]').click()
-        sleep(1)
+    assert driver.find_element(By.XPATH, '//div/label[contains(., "No orders")]').is_displayed()
+    sleep(0.25)
+    print(f'No order is displayed.')
 
-        check_order = driver.find_element(By.CLASS_NAME, 'roboto-bold ng-binding').text
-        print({check_order})
-        # sleep(1)
+    driver.find_element(By.ID, 'menuUserLink').click()
+    sleep(0.25)
 
-        driver.find_element(By.ID, 'menuUserLink').click()
-        sleep(1)
+    driver.find_element(By.XPATH, '//a/div/label[contains(., "My account"]').click()
+    print('')
+    sleep(0.5)
 
-        # driver.find_element(By.XPATH, '/html/body[contains(., "My account"]').click()
-        driver.find_element(By.XPATH, '//*[@id="loginMiniTitle"]/label[1][contains(., "My account")]').click()
-        sleep(0.5)
+    assert driver.find_element(By.XPATH, 'f//*[contains(., "{locators.full_name}")]').is_displayed()
+    print(f'User full name has displayed.')
+    sleep(1)
 
-        # driver.find_element(By.XPATH, '//*[@id="userDetails"]/div[1]/label[contains(., "full_name")]').is_displayed()
-        # sleep(1)
+    driver.find_element(By.CLASS_NAME, 'deleteBtnText').click()
+    sleep(2)
 
-        driver.find_element(By.CLASS_NAME, 'deleteBtnText').click()
-        sleep(1)
+    driver.find_element(By.XPATH, '//div[@class="deletePopupBtn deleteRed"]').click()
 
-        driver.find_element(By.ID, 'menuUser').click()
-        sleep(2)
+    driver.find_element(By.ID, 'menuUser').click()
+    sleep(2)
 
-        driver.find_element(By.NAME, 'username').send_keys(locators.username)
-        sleep(1)
+    driver.find_element(By.NAME, 'username').send_keys(locators.username)
+    sleep(1)
 
-        driver.find_element(By.NAME, 'password').send_keys(locators.password)
-        sleep(0.25)
+    driver.find_element(By.NAME, 'password').send_keys(locators.password)
+    sleep(0.25)
 
-        driver.find_element(By.ID, 'sign_in_btnundefined').click()
-        sleep(1)
+    driver.find_element(By.ID, 'sign_in_btnundefined').click()
+    sleep(1)
 
-        driver.find_element(By.XPATH, '//label[contains(., ("Incorrect user name or password."))]').is_displayed()
-        sleep(1)
+    driver.find_element(By.XPATH, '//label[contains(., ("Incorrect user name or password."))]').is_displayed()
+    sleep(1)
 
-        print('User name or password is deleted, please create a new account and try logining again.')
-        sleep(1)
+    print('User name or password is deleted, please create a new account and try logining again.')
+    sleep(1)
 
 
 def tear_down():
@@ -458,5 +413,5 @@ def tear_down():
 # sign_out()
 # log_in()
 # checkout_shopping_cart()
-# # delete_account()
+# delete_account()
 # tear_down()
