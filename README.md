@@ -28,3 +28,6 @@ Project Management
 - Automated tests are developed based on Manual Test cases using Jira weekly Sprints
 - Manual Test Cases are documented in Confluence and managed via Jira Tasks
 
+## Project Management
+- Automated tests are developed based on Manual Test Cases using Jira weekly Sprints
+- Manual Tests Cases are documented and managed via Jira Tasks
